@@ -1,36 +1,47 @@
 import React from "react";
-import { NodeProps, Handle, Position } from "@xyflow/react";
-import { TextNodeData } from "@/types";
+import { Handle, Position, type NodeProps } from "@xyflow/react";
+import { MessageCircle } from "lucide-react";
+import { type TextNodeData } from "../../types";
 
-const TextNode: React.FC<NodeProps<TextNodeData>> = ({ data, selected }) => {
+interface TextNodeProps extends NodeProps {
+  data: TextNodeData;
+  selected?: boolean;
+}
+
+const TextNode: React.FC<TextNodeProps> = ({ data, selected }) => {
   return (
     <div
-      className={`px-4 py-2 shadow-md rounded-md bg-white border-2 ${
-        selected ? "border-blue-500" : "border-gray-200"
-      } min-w-[200px] relative`}
+      className={`
+      bg-white border-2 rounded-lg p-4 shadow-lg min-w-[200px] max-w-[300px]
+      ${selected ? "border-blue-500 ring-2 ring-blue-200" : "border-gray-300"}
+      hover:border-blue-400 transition-colors duration-200
+    `}
     >
-      {/* Target Handle */}
+      {/* Target Handle - Can have multiple incoming connections */}
       <Handle
         type="target"
-        position={Position.Top}
-        className="w-3 h-3 bg-gray-400 rounded-full border-2 border-white"
+        position={Position.Left}
+        className="w-3 h-3 bg-gray-400 border-2 border-white"
+        style={{ left: "-6px" }}
       />
 
-      {/* Node content */}
-      <div className="flex items-center mb-2">
-        <div className="w-3 h-3 bg-green-500 rounded-full mr-2"></div>
-        <span className="text-sm font-medium text-gray-700">Send Message</span>
+      {/* Node Header */}
+      <div className="flex items-center gap-2 mb-2 text-purple-600">
+        <MessageCircle size={16} />
+        <span className="font-semibold text-sm">Send Message</span>
       </div>
 
-      <div className="text-sm text-gray-600 break-words">
-        {data.text || "Enter your message..."}
+      {/* Node Content */}
+      <div className="text-sm text-gray-700 break-words">
+        {data.text || "Click to edit message"}
       </div>
 
-      {/* Source Handle */}
+      {/* Source Handle - Only one outgoing connection allowed */}
       <Handle
         type="source"
-        position={Position.Bottom}
-        className="w-3 h-3 bg-gray-400 rounded-full border-2 border-white"
+        position={Position.Right}
+        className="w-3 h-3 bg-blue-500 border-2 border-white"
+        style={{ right: "-6px" }}
       />
     </div>
   );

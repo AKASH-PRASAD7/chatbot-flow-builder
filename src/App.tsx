@@ -1,35 +1,39 @@
-import { useState } from "react";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
+import React from "react";
+import FlowBuilder from "./components/FlowBuilder";
+import NodesPanel from "./components/panels/NodePannel";
+import SettingsPanel from "./components/panels/SettingsPannel";
+import SaveButton from "./components/SaveButton";
+import { useFlowStore } from "./store/useStore";
 
-function App() {
-  const [count, setCount] = useState(0);
+/**
+ * Main App Component
+ * Manages the layout and renders all major components
+ */
+const App: React.FC = () => {
+  const { showSettings } = useFlowStore();
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className="h-screen bg-gray-100 flex flex-col">
+      {/* Header */}
+      <header className="bg-white border-b border-gray-200 px-4 py-3">
+        <div className="flex items-center justify-between">
+          <h1 className="text-xl font-semibold text-gray-800">
+            Chatbot Flow Builder
+          </h1>
+          <SaveButton />
+        </div>
+      </header>
+
+      {/* Main Content */}
+      <div className="flex flex-1 overflow-hidden">
+        {/* Left Panel - Nodes or Settings */}
+        {showSettings ? <SettingsPanel /> : <NodesPanel />}
+
+        {/* Flow Builder */}
+        <FlowBuilder />
       </div>
-      <h1>Vite + React</h1>
-      <div className="card bg-white">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </div>
   );
-}
+};
 
 export default App;
