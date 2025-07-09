@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { ArrowLeft } from "lucide-react";
 import { useFlowStore } from "../../store/useStore";
 
@@ -18,17 +18,36 @@ const SettingsPanel: React.FC = () => {
   /**
    * Handle text change and update node data
    */
-  const handleTextChange = (newText: string) => {
+  const handleTextChange = useCallback((newText: string) => {
     setText(newText);
-    if (selectedNode) {
-      updateNode(selectedNode.id, { text: newText });
+    // Only update the store when user stops typing (debounced)
+  }, []);
+  const handleTextBlur = useCallback(() => {
+    if (selectedNode && text !== selectedNode.data.text) {
+      updateNode(selectedNode.id, { text });
     }
-  };
+  }, [selectedNode, text, updateNode]);
+
+  /**
+   * Handle Enter key to save changes
+   */
+  const handleKeyPress = useCallback(
+    (e: React.KeyboardEvent) => {
+      if (e.key === "Enter" && e.ctrlKey) {
+        handleTextBlur();
+      }
+    },
+    [handleTextBlur]
+  );
 
   /**
    * Handle back button click to return to nodes panel
    */
   const handleBack = () => {
+    // Save any pending changes before closing
+    if (selectedNode && text !== selectedNode.data.text) {
+      updateNode(selectedNode.id, { text });
+    }
     setShowSettings(false);
   };
 
@@ -56,10 +75,12 @@ const SettingsPanel: React.FC = () => {
           <textarea
             value={text}
             onChange={(e) => handleTextChange(e.target.value)}
+            onBlur={handleTextBlur}
+            onKeyDown={handleKeyPress}
             placeholder="Enter message text..."
             className="w-full p-2 border border-gray-300 rounded-md resize-none
                      focus:ring-2 focus:ring-blue-500 focus:border-blue-500
-                     transition-colors duration-200"
+                     transition-colors duration-200 text-black"
             rows={4}
           />
         </div>

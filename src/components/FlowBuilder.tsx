@@ -1,10 +1,9 @@
-import React, { useCallback, useMemo } from "react";
+import React, { useCallback, useMemo, useRef } from "react";
 import {
   ReactFlow,
   Background,
   Controls,
   MiniMap,
-  ReactFlowProvider,
   useNodesState,
   useEdgesState,
   addEdge,
@@ -12,6 +11,8 @@ import {
   type Edge,
   type Node,
   type OnSelectionChangeParams,
+  ReactFlowProvider,
+  useReactFlow,
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 
@@ -38,8 +39,11 @@ const FlowBuilder: React.FC = () => {
   } = useFlowStore();
 
   // Convert store nodes/edges to React Flow format
-  const [nodes, setNodesState, onNodesChange] = useNodesState(storeNodes);
-  const [edges, setEdgesState, onEdgesChange] = useEdgesState(storeEdges);
+  const [nodes, setNodesState, onNodesChange] = useNodesState([]);
+  const [edges, setEdgesState, onEdgesChange] = useEdgesState([]);
+
+  // Ref to track if we're updating from store
+  const isUpdatingFromStore = useRef(false);
 
   /**
    * Handle new connections between nodes
@@ -54,11 +58,11 @@ const FlowBuilder: React.FC = () => {
           edge.sourceHandle === params.sourceHandle
       );
 
+      let updatedEdges = edges;
+
       if (existingEdge) {
         // Remove existing edge from source handle
-        const newEdges = edges.filter((edge) => edge.id !== existingEdge.id);
-        setEdgesState(newEdges);
-        setEdges(newEdges);
+        updatedEdges = edges.filter((edge) => edge.id !== existingEdge.id);
       }
 
       // Add new edge
@@ -67,11 +71,53 @@ const FlowBuilder: React.FC = () => {
         id: `edge-${params.source}-${params.target}`,
       } as Edge;
 
-      const updatedEdges = addEdge(newEdge, edges);
+      updatedEdges = addEdge(newEdge, updatedEdges);
       setEdgesState(updatedEdges);
       setEdges(updatedEdges);
     },
     [edges, setEdgesState, setEdges]
+  );
+
+  /**
+   * Handle node changes (position, selection, etc.)
+   */
+  const handleNodesChange = useCallback(
+    (changes: any) => {
+      onNodesChange(changes);
+
+      // Update store with new node positions but preserve data
+      if (!isUpdatingFromStore.current) {
+        setNodesState((current) => {
+          const updatedNodes = current.map((node) => ({
+            ...node,
+            data:
+              storeNodes.find((storeNode) => storeNode.id === node.id)?.data ||
+              node.data,
+          }));
+          setNodes(updatedNodes);
+          return updatedNodes;
+        });
+      }
+    },
+    [onNodesChange, setNodes, storeNodes]
+  );
+
+  /**
+   * Handle edge changes
+   */
+  const handleEdgesChange = useCallback(
+    (changes: any) => {
+      onEdgesChange(changes);
+
+      // Update store with edge changes
+      if (!isUpdatingFromStore.current) {
+        setEdgesState((current) => {
+          setEdges(current);
+          return current;
+        });
+      }
+    },
+    [onEdgesChange, setEdges]
   );
 
   /**
@@ -114,11 +160,10 @@ const FlowBuilder: React.FC = () => {
         },
       };
 
-      // Add node to store and local state
+      // Add node to store
       addNode(newNode);
-      setNodesState((current) => [...current, newNode]);
     },
-    [addNode, setNodesState]
+    [addNode]
   );
 
   /**
@@ -134,22 +179,43 @@ const FlowBuilder: React.FC = () => {
 
   /**
    * Sync store changes with React Flow state
+   * Only sync when store actually changes, not on every render
    */
   React.useEffect(() => {
-    setNodesState(storeNodes);
-  }, [storeNodes, setNodesState]);
+    isUpdatingFromStore.current = true;
+
+    // Only update if there's a real difference
+    const nodesChanged = JSON.stringify(nodes) !== JSON.stringify(storeNodes);
+    if (nodesChanged) {
+      setNodesState(storeNodes);
+    }
+
+    setTimeout(() => {
+      isUpdatingFromStore.current = false;
+    }, 0);
+  }, [storeNodes]);
 
   React.useEffect(() => {
-    setEdgesState(storeEdges);
-  }, [storeEdges, setEdgesState]);
+    isUpdatingFromStore.current = true;
+
+    // Only update if there's a real difference
+    const edgesChanged = JSON.stringify(edges) !== JSON.stringify(storeEdges);
+    if (edgesChanged) {
+      setEdgesState(storeEdges);
+    }
+
+    setTimeout(() => {
+      isUpdatingFromStore.current = false;
+    }, 0);
+  }, [storeEdges]);
 
   return (
     <div className="flex-1 h-full">
       <ReactFlow
         nodes={nodes}
         edges={edges}
-        onNodesChange={onNodesChange}
-        onEdgesChange={onEdgesChange}
+        onNodesChange={handleNodesChange}
+        onEdgesChange={handleEdgesChange}
         onConnect={onConnect}
         onDrop={onDrop}
         onDragOver={onDragOver}
@@ -170,6 +236,7 @@ const FlowBuilder: React.FC = () => {
     </div>
   );
 };
+
 // Wrap with ReactFlowProvider for context
 const FlowBuilderWithProvider: React.FC = () => (
   <ReactFlowProvider>

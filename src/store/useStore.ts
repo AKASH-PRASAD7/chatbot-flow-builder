@@ -27,7 +27,21 @@ export const useFlowStore = create<FlowState>((set, get) => ({
   },
 
   setNodes: (nodes: FlowNode[]) => {
-    set({ nodes });
+    set((state) => {
+      // Preserve existing node data when updating positions
+      const updatedNodes = nodes.map((node) => {
+        const existingNode = state.nodes.find((n) => n.id === node.id);
+        return existingNode ? { ...node, data: existingNode.data } : node;
+      });
+
+      return {
+        nodes: updatedNodes,
+        // Update selectedNode if it exists in the new nodes
+        selectedNode: state.selectedNode
+          ? updatedNodes.find((n) => n.id === state.selectedNode!.id) || null
+          : null,
+      };
+    });
   },
 
   setEdges: (edges: FlowEdge[]) => {
