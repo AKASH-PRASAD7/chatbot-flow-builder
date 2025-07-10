@@ -12,8 +12,8 @@ const NodesPanel: React.FC = () => {
   };
 
   return (
-    <div className="w-64 bg-white border-l border-gray-200 p-4">
-      <h2 className="text-lg font-semibold mb-4 text-gray-800">Nodes Panel</h2>
+    <div className="w-64 bg-slate-200 border-l border-gray-400 p-4">
+      {/* <h2 className="text-lg font-semibold mb-4 text-gray-800">Nodes Panel</h2> */}
 
       {/* Draggable Message Node */}
       <div

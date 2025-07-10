@@ -54,7 +54,7 @@ const SettingsPanel: React.FC = () => {
   if (!selectedNode) return null;
 
   return (
-    <div className="w-64 bg-white border-l border-gray-200 p-4">
+    <div className="w-64 bg-slate-200 border-l border-gray-400 p-4">
       {/* Header with back button */}
       <div className="flex items-center gap-2 mb-4">
         <button
@@ -78,7 +78,7 @@ const SettingsPanel: React.FC = () => {
             onBlur={handleTextBlur}
             onKeyDown={handleKeyPress}
             placeholder="Enter message text..."
-            className="w-full p-2 border border-gray-300 rounded-md resize-none
+            className="w-full p-2 border border-gray-400 rounded-md resize-none
                      focus:ring-2 focus:ring-blue-500 focus:border-blue-500
                      transition-colors duration-200 text-black"
             rows={4}

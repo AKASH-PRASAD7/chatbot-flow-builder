@@ -20,7 +20,9 @@ const HeaderActions: React.FC = () => {
     toast(
       (t) => (
         <div className="flex flex-col items-center gap-4">
-          <p className="text-center">Are you sure you want to clear the flow?</p>
+          <p className="text-center">
+            Are you sure you want to clear the flow?
+          </p>
           <div className="flex gap-4">
             <button
               onClick={() => {
@@ -28,13 +30,13 @@ const HeaderActions: React.FC = () => {
                 toast.dismiss(t.id);
                 toast.success("Flow cleared!");
               }}
-              className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700"
+              className="px-4 py-2 bg-red-600 text-white rounded-md cursor-pointer hover:bg-red-700"
             >
               Yes, clear it
             </button>
             <button
               onClick={() => toast.dismiss(t.id)}
-              className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md hover:bg-gray-300"
+              className="px-4 py-2 bg-gray-200 text-gray-800 rounded-md cursor-pointer hover:bg-gray-300"
             >
               Cancel
             </button>
@@ -51,9 +53,9 @@ const HeaderActions: React.FC = () => {
     <div className="flex items-center gap-4">
       <button
         onClick={handleSave}
-        className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white 
-                   rounded-md hover:bg-blue-700 transition-colors duration-200
-                   font-medium shadow-sm"
+        className="flex items-center gap-2 px-4 py-2 bg-lime-600 text-white 
+                   rounded-xl hover:bg-lime-700 transition-colors duration-200
+                   font-medium shadow-sm cursor-pointer"
       >
         <Save size={16} />
         Save Changes
@@ -61,8 +63,8 @@ const HeaderActions: React.FC = () => {
       <button
         onClick={handleClear}
         className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white 
-                   rounded-md hover:bg-red-700 transition-colors duration-200
-                   font-medium shadow-sm"
+                   rounded-xl hover:bg-red-700 transition-colors duration-200
+                   font-medium shadow-sm cursor-pointer"
       >
         <Trash2 size={16} />
         Clear All

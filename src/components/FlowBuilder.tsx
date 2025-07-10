@@ -221,12 +221,12 @@ const FlowBuilder: React.FC = () => {
         onSelectionChange={onSelectionChange}
         nodeTypes={nodeTypes}
         fitView
-        className="bg-gray-50"
+        // className="bg-gray-50"
       >
         <Background />
         <Controls />
         <MiniMap
-          className="bg-white"
+          className="bg-blue-100"
           nodeColor={(node) => {
             return node.type === "textNode" ? "#3B82F6" : "#6B7280";
           }}

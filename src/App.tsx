@@ -14,14 +14,17 @@ const App: React.FC = () => {
   const { showSettings } = useFlowStore();
 
   return (
-    <div className="h-screen bg-gray-100 flex flex-col">
+    <div className="h-screen bg-white flex flex-col">
       <Toaster position="top-center" reverseOrder={false} />
       {/* Header */}
-      <header className="bg-white border-b border-gray-200 px-4 py-3">
+      <header className="bg-slate-200 border-b border-gray-400 px-4 py-3">
         <div className="flex items-center justify-between">
-          <h1 className="text-xl font-semibold text-gray-800">
-            Chatbot Flow Builder
-          </h1>
+          <div className="flex  h-8 items-center">
+            <img src="/logo.png" className="w-24 h-18 mt-2 cursor-pointer" />
+            <h1 className="text-xl font-semibold text-gray-800 cursor-pointer">
+              ChatTangle
+            </h1>
+          </div>
           <HeaderActions />
         </div>
       </header>
