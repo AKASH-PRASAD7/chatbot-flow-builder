@@ -2,7 +2,7 @@ import React from "react";
 import FlowBuilder from "./components/FlowBuilder";
 import NodesPanel from "./components/panels/NodePannel";
 import SettingsPanel from "./components/panels/SettingsPannel";
-import SaveButton from "./components/SaveButton";
+import HeaderActions from "./components/HeaderActions";
 import { useFlowStore } from "./store/useStore";
 
 /**
@@ -20,7 +20,7 @@ const App: React.FC = () => {
           <h1 className="text-xl font-semibold text-gray-800">
             Chatbot Flow Builder
           </h1>
-          <SaveButton />
+          <HeaderActions />
         </div>
       </header>
 
