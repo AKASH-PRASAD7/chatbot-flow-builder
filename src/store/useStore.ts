@@ -18,6 +18,17 @@ export const useFlowStore = create<FlowState>((set, get) => ({
     }));
   },
 
+  deleteNode: (nodeId: string) => {
+    set((state) => ({
+      nodes: state.nodes.filter((node) => node.id !== nodeId),
+      edges: state.edges.filter(
+        (edge) => edge.source !== nodeId && edge.target !== nodeId
+      ),
+      selectedNode:
+        state.selectedNode?.id === nodeId ? null : state.selectedNode,
+    }));
+  },
+
   updateNode: (nodeId: string, data: Partial<TextNodeData>) => {
     set((state) => ({
       nodes: state.nodes.map((node) =>
