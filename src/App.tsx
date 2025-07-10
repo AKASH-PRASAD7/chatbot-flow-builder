@@ -7,6 +7,7 @@ import HeaderActions from "./components/HeaderActions";
 import Tutorial from "./components/Tutorial"; // Import the Tutorial component
 import { useFlowStore } from "./store/useStore";
 import { HelpCircle } from "lucide-react"; // Import the HelpCircle icon
+import Footer from "./components/Footer";
 
 /**
  * Main App Component
@@ -45,7 +46,7 @@ const App: React.FC = () => {
             <HeaderActions />
             <button
               onClick={() => setShowTutorial(true)}
-              className="text-gray-600 hover:text-gray-900"
+              className="text-gray-600 hover:text-gray-900 cursor-pointer"
               title="Help"
             >
               <HelpCircle size={24} />
@@ -62,6 +63,7 @@ const App: React.FC = () => {
         {/* Right Panel - Nodes or Settings */}
         {showSettings ? <SettingsPanel /> : <NodesPanel />}
       </div>
+      <Footer />
     </div>
   );
 };
