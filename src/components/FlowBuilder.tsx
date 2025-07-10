@@ -131,6 +131,7 @@ const FlowBuilder: React.FC = () => {
   /**
    * Handle drop event to create new nodes
    */
+  const { screenToFlowPosition } = useReactFlow();
   const onDrop = useCallback(
     (event: React.DragEvent) => {
       event.preventDefault();
@@ -141,12 +142,10 @@ const FlowBuilder: React.FC = () => {
         return;
       }
 
-      // Get the drop position
-      const reactFlowBounds = (event.target as Element).getBoundingClientRect();
-      const position = {
-        x: event.clientX - reactFlowBounds.left,
-        y: event.clientY - reactFlowBounds.top,
-      };
+      const position = screenToFlowPosition({
+        x: event.clientX,
+        y: event.clientY,
+      });
 
       // Create new node
       const newNode: FlowNode = {

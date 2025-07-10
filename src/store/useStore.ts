@@ -23,6 +23,14 @@ export const useFlowStore = create<FlowState>((set, get) => ({
       nodes: state.nodes.map((node) =>
         node.id === nodeId ? { ...node, data: { ...node.data, ...data } } : node
       ),
+      // Update selectedNode if it's the one being updated
+      selectedNode:
+        state.selectedNode?.id === nodeId
+          ? {
+              ...state.selectedNode,
+              data: { ...state.selectedNode.data, ...data },
+            }
+          : state.selectedNode,
     }));
   },
 
@@ -56,7 +64,10 @@ export const useFlowStore = create<FlowState>((set, get) => ({
   },
 
   setShowSettings: (show: boolean) => {
-    set({ showSettings: show });
+    set({
+      showSettings: show,
+      selectedNode: show ? get().selectedNode : null,
+    });
   },
 
   validateFlow: () => {
