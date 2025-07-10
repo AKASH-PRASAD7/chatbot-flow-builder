@@ -197,16 +197,18 @@ const FlowBuilder: React.FC = () => {
   React.useEffect(() => {
     isUpdatingFromStore.current = true;
 
+    const animatedEdges = storeEdges.map((edge) => ({ ...edge, animated: true }));
+
     // Only update if there's a real difference
-    const edgesChanged = JSON.stringify(edges) !== JSON.stringify(storeEdges);
+    const edgesChanged = JSON.stringify(edges) !== JSON.stringify(animatedEdges);
     if (edgesChanged) {
-      setEdgesState(storeEdges);
+      setEdgesState(animatedEdges);
     }
 
     setTimeout(() => {
       isUpdatingFromStore.current = false;
     }, 0);
-  }, [storeEdges]);
+  }, [storeEdges, setEdgesState]);
 
   return (
     <div className="flex-1 h-full">

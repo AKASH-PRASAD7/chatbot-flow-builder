@@ -66,7 +66,10 @@ export const useFlowStore = create<FlowState>()(
       },
 
       setShowSettings: (show: boolean) => {
-        set({ showSettings: show, selectedNode: show ? get().selectedNode : null });
+        set({
+          showSettings: show,
+          selectedNode: show ? get().selectedNode : null,
+        });
       },
 
       validateFlow: () => {
