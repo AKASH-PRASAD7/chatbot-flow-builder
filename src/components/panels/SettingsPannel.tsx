@@ -54,7 +54,7 @@ const SettingsPanel: React.FC = () => {
   if (!selectedNode) return null;
 
   return (
-    <div className="w-64 bg-white border-r border-gray-200 p-4">
+    <div className="w-64 bg-white border-l border-gray-200 p-4">
       {/* Header with back button */}
       <div className="flex items-center gap-2 mb-4">
         <button

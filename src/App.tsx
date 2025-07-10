@@ -1,4 +1,5 @@
 import React from "react";
+import { Toaster } from "react-hot-toast";
 import FlowBuilder from "./components/FlowBuilder";
 import NodesPanel from "./components/panels/NodePannel";
 import SettingsPanel from "./components/panels/SettingsPannel";
@@ -14,6 +15,7 @@ const App: React.FC = () => {
 
   return (
     <div className="h-screen bg-gray-100 flex flex-col">
+      <Toaster position="top-center" reverseOrder={false} />
       {/* Header */}
       <header className="bg-white border-b border-gray-200 px-4 py-3">
         <div className="flex items-center justify-between">
@@ -26,11 +28,11 @@ const App: React.FC = () => {
 
       {/* Main Content */}
       <div className="flex flex-1 overflow-hidden">
-        {/* Left Panel - Nodes or Settings */}
-        {showSettings ? <SettingsPanel /> : <NodesPanel />}
-
         {/* Flow Builder */}
         <FlowBuilder />
+
+        {/* Right Panel - Nodes or Settings */}
+        {showSettings ? <SettingsPanel /> : <NodesPanel />}
       </div>
     </div>
   );
