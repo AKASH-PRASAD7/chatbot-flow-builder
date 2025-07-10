@@ -21,7 +21,7 @@ const TextNode: React.FC<TextNodeProps> = ({ id, data, selected }) => {
   return (
     <div
       className={`
-      bg-white border-2 rounded-2xl p-2 shadow-lg min-w-[200px] max-w-[300px]
+      bg-slate-100 border-2 rounded-2xl p-2 shadow-lg min-w-[200px] max-w-[300px]
       ${selected ? "border-blue-500  ring-blue-200" : "border-gray-300"}
       hover:border-blue-400 transition-colors duration-200 relative
     `}
