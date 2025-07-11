@@ -54,7 +54,7 @@ Make sure you have [Node.js](https://nodejs.org/en/) and [pnpm](https://pnpm.io/
 ### Clone the repository
 
 ```bash
-git clone https://github.com/your-username/chatbot-flow-builder.git
+git clone https://github.com/AKASH-PRASAD7/chatbot-flow-builder.git
 cd chatbot-flow-builder
 ```
 
