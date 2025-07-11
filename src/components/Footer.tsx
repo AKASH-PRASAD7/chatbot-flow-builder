@@ -2,9 +2,9 @@ import { Github, Linkedin, Twitter, Mail } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="bg-gray-800 text-white p-2 text-center flex justify-center gap-4 items-center">
+    <footer className="bg-gray-800 text-white p-2 text-center flex flex-col md:flex-row justify-center gap-2 md:gap-4 items-center">
       <div>
-        <p>Made by &copy; {new Date().getFullYear()} Akash Prasad</p>
+        <p className="text-sm">Made by &copy; {new Date().getFullYear()} Akash Prasad</p>
       </div>
       <div className="flex items-center space-x-4">
         <a

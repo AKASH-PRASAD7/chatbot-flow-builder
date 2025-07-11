@@ -6,31 +6,22 @@ const SettingsPanel: React.FC = () => {
   const { selectedNode, updateNode, setShowSettings } = useFlowStore();
   const [text, setText] = useState("");
 
-  /**
-   * Initialize text field with selected node's text
-   */
   useEffect(() => {
     if (selectedNode) {
       setText(selectedNode.data.text || "");
     }
   }, [selectedNode]);
 
-  /**
-   * Handle text change and update node data
-   */
   const handleTextChange = useCallback((newText: string) => {
     setText(newText);
-    // Only update the store when user stops typing (debounced)
   }, []);
+
   const handleTextBlur = useCallback(() => {
     if (selectedNode && text !== selectedNode.data.text) {
       updateNode(selectedNode.id, { text });
     }
   }, [selectedNode, text, updateNode]);
 
-  /**
-   * Handle Enter key to save changes
-   */
   const handleKeyPress = useCallback(
     (e: React.KeyboardEvent) => {
       if (e.key === "Enter" && e.ctrlKey) {
@@ -40,11 +31,7 @@ const SettingsPanel: React.FC = () => {
     [handleTextBlur]
   );
 
-  /**
-   * Handle back button click to return to nodes panel
-   */
   const handleBack = () => {
-    // Save any pending changes before closing
     if (selectedNode && text !== selectedNode.data.text) {
       updateNode(selectedNode.id, { text });
     }
@@ -54,8 +41,7 @@ const SettingsPanel: React.FC = () => {
   if (!selectedNode) return null;
 
   return (
-    <div className="w-64 bg-slate-200 border-l border-gray-400 p-4">
-      {/* Header with back button */}
+    <div className="w-full h-full bg-slate-200 border-l border-gray-400 p-4 overflow-y-auto">
       <div className="flex items-center gap-2 mb-4">
         <button
           onClick={handleBack}
@@ -66,7 +52,6 @@ const SettingsPanel: React.FC = () => {
         <h2 className="text-lg font-semibold text-gray-800">Settings</h2>
       </div>
 
-      {/* Node settings form */}
       <div className="space-y-4">
         <div>
           <label className="block text-sm font-medium text-gray-700 mb-1">
@@ -85,7 +70,6 @@ const SettingsPanel: React.FC = () => {
           />
         </div>
 
-        {/* Additional settings can be added here */}
         <div className="text-xs text-gray-500">Node ID: {selectedNode.id}</div>
       </div>
     </div>

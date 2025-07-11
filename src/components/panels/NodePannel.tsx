@@ -2,20 +2,13 @@ import React from "react";
 import { MessageCircle } from "lucide-react";
 
 const NodesPanel: React.FC = () => {
-  /**
-   * Handle drag start event for node creation
-   * This sets the data transfer with node type information
-   */
   const onDragStart = (event: React.DragEvent, nodeType: string) => {
     event.dataTransfer.setData("application/reactflow", nodeType);
     event.dataTransfer.effectAllowed = "move";
   };
 
   return (
-    <div className="w-64 bg-slate-200 border-l border-gray-400 p-4">
-      {/* <h2 className="text-lg font-semibold mb-4 text-gray-800">Nodes Panel</h2> */}
-
-      {/* Draggable Message Node */}
+    <div className="w-full h-full bg-slate-200 border-l border-gray-400 p-4 overflow-y-auto">
       <div
         className="flex items-center gap-3 p-3 bg-blue-50 border-2 border-dashed 
                    border-blue-300 rounded-lg cursor-grab hover:bg-blue-100 
@@ -27,7 +20,6 @@ const NodesPanel: React.FC = () => {
         <span className="text-sm font-medium text-blue-800">Message</span>
       </div>
 
-      {/* Placeholder for future node types */}
       <div className="mt-4 text-xs text-gray-500">
         More node types will be added here in the future...
       </div>
