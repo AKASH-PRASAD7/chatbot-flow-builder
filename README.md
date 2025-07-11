@@ -1,6 +1,6 @@
 # ChatTangle
 
-=<img width="1918" height="910" alt="image" src="https://github.com/user-attachments/assets/a45aafdb-8d32-4bb4-90d8-847a3c452bb9" />
+<img width="1918" height="910" alt="image" src="https://github.com/user-attachments/assets/a45aafdb-8d32-4bb4-90d8-847a3c452bb9" />
 
 ## Badges
 
