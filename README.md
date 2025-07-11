@@ -15,7 +15,7 @@
 
 ## Project Overview
 
-This project is a **ChatTangle**, a powerful and intuitive web application designed to help users visually create, manage, and deploy complex chatbot conversation flows. Built with modern web technologies, it provides a drag-and-drop interface for defining conversational paths, message nodes, and conditional logic, making chatbot development accessible and efficient.
+**ChatTangle** is a powerful and intuitive web application designed to help users visually create, manage, and deploy complex chatbot conversation flows. Built with modern web technologies, it provides a drag-and-drop interface for defining conversational paths, message nodes, and conditional logic, making chatbot development accessible and efficient.
 
 ## Features
 
