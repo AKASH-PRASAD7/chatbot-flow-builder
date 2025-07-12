@@ -119,4 +119,4 @@ pnpm test:ui
 
 ## License
 
-Distributed under the MIT License. See `LICENSE` for more information. (Note: You might need to create a `LICENSE` file if you don't have one.)
+Distributed under the MIT License. See `LICENSE` for more information.
